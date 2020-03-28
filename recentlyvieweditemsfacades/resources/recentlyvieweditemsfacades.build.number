@@ -1,0 +1,10 @@
+#Ant properties
+#Thu Jul 19 07:58:43 GMT 2018
+builddate=20180719 0758
+description=recentlyvieweditemsfacades
+group.id=de.hybris.platform
+module.name=platform-module
+name=recentlyvieweditemsfacades
+vendor=hybris
+version=18.08
+version.api=18.08.0

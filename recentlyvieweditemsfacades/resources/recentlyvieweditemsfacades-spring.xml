@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util.xsd">
+           
+
+    <bean id="recentlyvieweditemsfacadesSystemSetup" class="com.app.recentlyvieweditemsfacades.setup.RecentlyvieweditemsfacadesSystemSetup">
+        <!-- constructor arg injection example -->
+        <constructor-arg ref="recentlyvieweditemsfacadesService"/>
+    </bean>
+
+    <bean id="recentlyvieweditemsfacadesService" class="com.app.recentlyvieweditemsfacades.service.impl.DefaultRecentlyvieweditemsfacadesService">
+        <!-- setter injection example -->
+        <property name="modelService" ref="modelService"/>
+        <property name="mediaService" ref="mediaService"/>
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+    
+    <util:map id="retrievalStrategiesMap" key-type="com.app.recentlyvieweditemsfacades.RetrievalSource" value-type="com.app.recentlyvieweditemsfacades.strategies.RetrievalStrategy" >
+		<entry key="SESSION" value-ref="sessionRetrievalStrategy"/>
+	</util:map>
+	
+		<bean id="sessionRetrievalStrategy" class="com.app.recentlyvieweditemsfacades.strategies.impl.SessionRetrievalStrategy" >
+	</bean>
+	
+	<bean id="recentViewedItemsService" class="de.hybris.platform.recentvieweditemsservices.impl.DefaultRecentViewedItemsService">
+		<property name="sessionService" ref="sessionService"/>
+		<property name="maxRecentViewedItems" value="#{configurationService.configuration.getProperty('recentviewed.maxRecentViewedItems.count')}"/>
+	</bean>
+	
+	<bean id="recentViewedItemFacade" class="com.app.recentlyvieweditemsfacades.impl.DefaultRecentViewedItemFacade" ></bean>
+			
+</beans>
